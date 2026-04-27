@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function Home() {
   const [status, setStatus] = useState<string | null>(null);
@@ -13,8 +16,8 @@ function Home() {
 
   return (
     <div>
-      <h1>Ticket Answering System</h1>
-      <p>Server status: {status ?? "checking..."}</p>
+      <h1 className="text-2xl font-semibold text-gray-800">Ticket Answering System</h1>
+      <p className="text-gray-600 mt-2">Server status: {status ?? "checking..."}</p>
     </div>
   );
 }
@@ -22,7 +25,12 @@ function Home() {
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+      </Route>
     </Routes>
   );
 }
