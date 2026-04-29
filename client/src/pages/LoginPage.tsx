@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -12,7 +12,6 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function LoginPage() {
-  const navigate = useNavigate();
   const { data: session, isPending } = authClient.useSession();
 
   const {
@@ -22,12 +21,8 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  if (!isPending && session) {
-    navigate("/", { replace: true });
-    return null;
-  }
-
-  if (isPending) return null;
+  if (isPending) return <div className="min-h-screen flex items-center justify-center text-gray-400">Loading...</div>;
+  if (session) return <Navigate to="/" replace />;
 
   async function onSubmit(data: FormData) {
     const { error } = await authClient.signIn.email(data);
