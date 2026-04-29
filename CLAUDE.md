@@ -29,9 +29,11 @@ An AI-powered ticket management system for handling support emails. The system a
 
 ## Tech Stack
 
-**Frontend:** React + TypeScript, Tailwind CSS, React Router
+**Frontend:** React 19 + TypeScript, Tailwind CSS v4 (CSS-based config via `@tailwindcss/vite`, no `tailwind.config.js`), React Router, shadcn/ui (style: base-nova, base color: neutral)
 
 **Backend:** Node.js + Express + TypeScript, database sessions for auth
+
+**Auth:** Better Auth — session-based, role-based (Admin / Agent)
 
 **Database:** PostgreSQL with Prisma ORM
 
@@ -41,17 +43,22 @@ An AI-powered ticket management system for handling support emails. The system a
 
 **Deployment:** Docker + cloud provider (Railway, Fly.io, AWS)
 
+**Package manager:** bun (do not use npm — it fails on this workspace setup)
+
 ## Project Structure
 
 ```
 /client   — React frontend
+  src/components/ui/   — shadcn components
+  src/lib/utils.ts     — cn() helper
+  components.json      — shadcn config
 /server   — Express backend
 ```
 
 ## Implementation Phases
 
-1. Project setup — monorepo, Express + React scaffolding, PostgreSQL
-2. Authentication — session-based login/logout, route protection
+1. Project setup — monorepo, Express + React scaffolding, PostgreSQL ✅
+2. Authentication — session-based login/logout, route protection ✅
 3. User management — admin CRUD for agents, role-based access control
 4. Ticket CRUD — API endpoints, list page (filter/sort), detail page
 5. AI features — Claude API integration, classification, summary, suggested reply, knowledge base
